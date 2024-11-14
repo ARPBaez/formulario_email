@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Contato</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <div class="form-container">
+    <form id="contact-form">
+      <h2>Entre em Contato</h2>
+      <label for="name">Nome</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="message">Mensagem</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+      
+      <button type="submit">Enviar</button>
+    </form>
+    <p id="status"></p>
+  </div>
+
+  <!-- Script EmailJS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Inicializa o EmailJS com seu User ID
+    (function() {
+      emailjs.init("If9jjgA3lXaKRhDH1"); // Substitua com seu User ID
+    })();
+
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const serviceID = "service_1kwapbf"; // Substitua com seu Service ID
+      const templateID = "template_9xnsnwv"; // Substitua com seu Template ID
+
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          document.getElementById("status").innerHTML = "Mensagem enviada com sucesso!";
+          this.reset();
+        }, (err) => {
+          document.getElementById("status").innerHTML = "Erro ao enviar: " + JSON.stringify(err);
+        });
+    });
+  </script>
+</body>
+</html>
